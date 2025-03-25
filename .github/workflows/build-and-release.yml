@@ -1,0 +1,47 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: 'gradle'
+
+    - name: Build with Gradle
+      run: |
+        cd Server
+        ./gradlew build
+
+    - name: Get version
+      id: get_version
+      run: |
+        cd Server
+        VERSION=$(grep -m 1 "version = " build.gradle.kts | sed 's/version = "\(.*\)"/\1/')
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+    - name: Create Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ env.VERSION }}
+        name: Release v${{ env.VERSION }} (${{ env.RELEASE_DATE }})
+        draft: false
+        prerelease: false
+        generate_release_notes: true
+        files: |
+          Server/build/distributions/*.zip
+          Server/build/distributions/*.tar
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
