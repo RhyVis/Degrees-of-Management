@@ -1,0 +1,87 @@
+[versions]
+kotlin = "2.1.10"
+ktor = "3.1.1"
+ktor-simpleCache = "0.51.2"
+koin = "4.1.0-Beta5"
+logback = "1.5.17"
+toml = "0.5.2"
+lzString4k = "1.0.0"
+
+[libraries]
+# Ktor libraries
+ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
+ktor-server-host-common = { module = "io.ktor:ktor-server-host-common", version.ref = "ktor" }
+ktor-server-status-pages = { module = "io.ktor:ktor-server-status-pages", version.ref = "ktor" }
+ktor-server-caching-headers = { module = "io.ktor:ktor-server-caching-headers", version.ref = "ktor" }
+ktor-server-compression = { module = "io.ktor:ktor-server-compression", version.ref = "ktor" }
+ktor-server-default-headers = { module = "io.ktor:ktor-server-default-headers", version.ref = "ktor" }
+ktor-server-openapi = { module = "io.ktor:ktor-server-openapi", version.ref = "ktor" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-server-freemarker = { module = "io.ktor:ktor-server-freemarker", version.ref = "ktor" }
+ktor-server-test-host-jvm = { module = "io.ktor:ktor-server-test-host-jvm", version.ref = "ktor" }
+ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
+
+# Ktor Simple Cache
+ktor-simpleCache = { module = "com.ucasoft.ktor:ktor-simple-cache", version.ref = "ktor-simpleCache" }
+ktor-simpleMemoryCache = { module = "com.ucasoft.ktor:ktor-simple-memory-cache", version.ref = "ktor-simpleCache" }
+
+# Koin
+koin-ktor3 = { module = "io.insert-koin:koin-ktor3", version.ref = "koin" }
+koin-logger-slf4j = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin" }
+
+# Logging
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+
+# Serialization
+toml-core = { module = "com.akuleshov7:ktoml-core", version.ref = "toml" }
+toml-file = { module = "com.akuleshov7:ktoml-file", version.ref = "toml" }
+
+lzString = { module = "com.github.ZenLiuCN:lz-string4k", version.ref = "lzString4k" }
+
+# Testing
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+
+[bundles]
+ktor = [
+  "ktor-server-core",
+  "ktor-server-host-common",
+  "ktor-server-status-pages",
+  "ktor-server-caching-headers",
+  "ktor-server-compression",
+  "ktor-server-default-headers",
+  "ktor-server-netty",
+  "ktor-server-content-negotiation",
+  "ktor-serialization-kotlinx-json",
+  "ktor-server-freemarker",
+]
+ktorCache = [
+  "ktor-simpleCache",
+  "ktor-simpleMemoryCache"
+]
+
+koin = [
+  "koin-ktor3",
+  "koin-logger-slf4j"
+]
+
+logging = [
+  "logback"
+]
+
+toml = [
+  "toml-core",
+  "toml-file"
+]
+
+test = [
+  "kotlin-test",
+  "ktor-server-test-host-jvm",
+  "ktor-server-test-host"
+]
+
+[plugins]
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
