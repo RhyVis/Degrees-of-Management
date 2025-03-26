@@ -71,6 +71,7 @@ fun Application.editRouting() {
                     try {
                         File("${GameRegistry.path}/$id.json").delete()
                         initInstance()
+                        call.respond(HttpStatusCode.OK)
                     } catch (e: Exception) {
                         Logger.error("Failed to delete instance $id: ${e.message}", e)
                         call.respond(HttpStatusCode.InternalServerError)

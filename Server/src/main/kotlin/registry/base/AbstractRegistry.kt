@@ -16,14 +16,16 @@ abstract class AbstractRegistry<R : RegistryObject>(
 
     fun get(id: String): R? = _registry[id]
 
+    fun clear() {
+        _registry.clear()
+    }
+}
+
+abstract class AbstractPathRegistry<R : RegistryPathObject>(
+    name: String,
+) : AbstractRegistry<R>(name) {
     fun getPathStr(id: String): String? {
         val obj = get(id) ?: return null
         return "$path/${obj.path}"
-    }
-
-    fun del(id: String): Boolean = _registry.remove(id)?.let { true } ?: false
-
-    fun clear() {
-        _registry.clear()
     }
 }

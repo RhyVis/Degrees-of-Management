@@ -8,5 +8,8 @@ package rhx.dol.registry.base
  */
 interface RegistryObject {
     val id: String
+}
+
+interface RegistryPathObject : RegistryObject {
     val path: String
 }
