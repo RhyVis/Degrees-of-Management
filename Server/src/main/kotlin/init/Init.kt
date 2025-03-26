@@ -76,6 +76,18 @@ fun initFiles() {
         Logger.info("Loaded layers: [${LayerRegistry.registry.keys.joinToString(",")}]")
     }
 
+    initInstance()
+
+    val saveDir = File(ConfigObj.saveDir)
+    if (!saveDir.exists()) {
+        Logger.info("Creating save directory")
+        saveDir.mkdirs()
+    }
+
+    Logger.info("Initialization complete.")
+}
+
+fun initInstance() {
     val instanceDir = File(GameRegistry.path)
     if (!instanceDir.exists()) {
         Logger.info("Creating instance directory")
@@ -96,12 +108,4 @@ fun initFiles() {
         }
         Logger.info("Loaded instances: [${GameRegistry.registry.keys.joinToString(",")}]")
     }
-
-    val saveDir = File(ConfigObj.saveDir)
-    if (!saveDir.exists()) {
-        Logger.info("Creating save directory")
-        saveDir.mkdirs()
-    }
-
-    Logger.info("Initialization complete.")
 }

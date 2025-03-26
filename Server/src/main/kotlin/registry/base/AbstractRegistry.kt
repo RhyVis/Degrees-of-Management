@@ -1,7 +1,6 @@
 package rhx.dol.registry.base
 
 import rhx.dol.ConfigObj
-import java.io.File
 
 abstract class AbstractRegistry<R : RegistryObject>(
     val name: String,
@@ -22,10 +21,7 @@ abstract class AbstractRegistry<R : RegistryObject>(
         return "$path/${obj.path}"
     }
 
-    fun getFile(id: String): File? {
-        val obj = get(id) ?: return null
-        return File("$path/${obj.path}")
-    }
+    fun del(id: String): Boolean = _registry.remove(id)?.let { true } ?: false
 
     fun clear() {
         _registry.clear()

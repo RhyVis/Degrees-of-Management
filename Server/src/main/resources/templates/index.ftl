@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--
+    Favicon from [Degrees of Lewdity] by [Vrelnir]
+    Licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+    https://creativecommons.org/licenses/by-nc-sa/4.0/
+-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Degrees of Management</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -103,7 +109,7 @@
                 </div>
             </div>
         </#if>
-        <a href="/play/${instance.id}/index" class="launch-button">Launch Game</a>
+        <a href="/play/${instance.id}/index" class="launch-button" target="_blank" rel="noopener noreferrer">Launch Game</a>
     </div>
 <#else>
     <p>No instances available</p>
@@ -112,13 +118,32 @@
 <div class="instance-card" style="text-align: center;">
     <div class="instance-name">Administration</div>
     <div class="instance-info">Perform management actions</div>
-    <!--<form action="/edit" method="post" style="margin-top: 15px;">
-        <button type="submit" class="launch-button">Manage Instances</button>
-    </form>-->
+    <a href="/edit/interface" class="launch-button" style="margin-top: 15px; display: inline-block;">Manage Instances</a>
+    <div style="margin-top: 15px;">
+        <button type="button" id="reload-instance-button" class="launch-button">Reload Instance</button>
+    </div>
     <form action="/edit/reload" method="post" style="margin-top: 15px;">
         <button type="submit" class="launch-button">Reload Registry</button>
     </form>
 </div>
+
+<script>
+document.getElementById('reload-instance-button').addEventListener('click', () => {
+    fetch('/edit/reload/registry', {
+        method: 'POST',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        window.location.reload();
+    })
+    .catch(error => {
+        console.error('Error reloading instances:', error);
+        alert('Failed to reload instances: ' + error.message);
+    });
+});
+</script>
 
 </body>
 </html>
