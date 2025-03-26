@@ -75,7 +75,7 @@
     </style>
 </head>
 <body>
-<h1>Degrees of Lewdity</h1>
+<h1>Degrees of Management</h1>
 
 <#list instances as instance>
     <div class="instance-card">
