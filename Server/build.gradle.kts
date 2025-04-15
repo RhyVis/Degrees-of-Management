@@ -1,5 +1,5 @@
 group = "rhx.dol"
-version = "1.0.2"
+version = "1.0.3"
 
 plugins {
     alias(libs.plugins.kotlinJvm)
@@ -16,7 +16,6 @@ dependencies {
     implementation(libs.bundles.ktor)
     implementation(libs.bundles.logging)
     implementation(libs.bundles.toml)
-    implementation(libs.lzString)
     testImplementation(libs.bundles.test)
 }
 
@@ -26,4 +25,11 @@ kotlin {
 
 application {
     mainClass = "io.ktor.server.netty.EngineMain"
+}
+
+ktor {
+    docker {
+        localImageName = "degrees-of-management"
+        jreVersion = JavaVersion.VERSION_21
+    }
 }

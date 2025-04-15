@@ -11,6 +11,8 @@ After completing the configuration below, visit http://localhost:8080 to access 
 
 The `rootDir` field configures the folder where the data files are nested, default is `data`.
 
+Also, you can access docker builds in 'Packages'.
+
 ### Data Folders
 The data folder by default contains `foundation`, `layer`, `mod`, `instance`, `save`.
 
