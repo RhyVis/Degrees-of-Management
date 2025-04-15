@@ -13,6 +13,8 @@
 
 `rootDir`字段配置数据文件被嵌套的文件夹，默认为`data`
 
+当然，你也可以使用Docker版本，在 'Packages' 中可以找到。
+
 ### 数据文件夹
 数据文件夹默认有`foundation`，`layer`，`mod`，`instance`，`save`。
 
