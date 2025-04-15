@@ -11,6 +11,7 @@ import io.ktor.server.routing.post
 import kotlinx.serialization.Serializable
 import rhx.dol.ConfigObj
 import rhx.dol.Logger
+import sun.jvm.hotspot.HelloWorld.e
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -63,6 +64,11 @@ data class Code(
 
 private val dateFormatterCompact by lazy { DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss") }
 
+private fun assembleSaveName(
+    id: String,
+    code: Code,
+): String = "${ConfigObj.saveDir}/$id/${code.aliasNoEmpty}-${dateFormatterCompact.format(LocalDateTime.now())}.save"
+
 private fun saveToFile(
     id: String,
     code: Code,
@@ -70,7 +76,7 @@ private fun saveToFile(
     try {
         val currentSaveDir = File("${ConfigObj.saveDir}/$id")
         if (!currentSaveDir.exists()) currentSaveDir.mkdirs()
-        val saveName = "${ConfigObj.saveDir}/$id/${code.aliasNoEmpty}-${dateFormatterCompact.format(LocalDateTime.now())}.dos"
+        val saveName = assembleSaveName(id, code)
         val saveFile = File(saveName)
         if (saveFile.exists()) {
             Logger.warn("Overriding existing save file: ${saveFile.absolutePath}")
@@ -87,7 +93,7 @@ private fun iterSaveList(id: String): List<String>? =
     try {
         val saveDir = File(ConfigObj.saveDir).resolve(id)
         if (!saveDir.exists()) saveDir.mkdirs()
-        saveDir.listFiles { it.isFile && it.extension == "dos" }.map { saveFile ->
+        saveDir.listFiles { it.isFile && (it.extension == "dos" || it.extension == "save") }.map { saveFile ->
             saveFile.nameWithoutExtension
         }
     } catch (e: Exception) {
@@ -100,7 +106,9 @@ private fun fetchSaveFile(
     saveId: String,
 ): String? =
     try {
-        File("${ConfigObj.saveDir}/$id/$saveId.dos").takeIf { it.exists() && it.isFile }?.readText()
+        val name = "${ConfigObj.saveDir}/$id/$saveId"
+        File("$name.dos").takeIf { it.exists() && it.isFile }?.readText()
+            ?: File("$name.save").takeIf { it.exists() && it.isFile }?.readText()
     } catch (e: Exception) {
         Logger.error("Failed to fetch save file", e)
         null
@@ -112,6 +120,7 @@ private fun deleteSaveFile(
 ): String? {
     return try {
         File("${ConfigObj.saveDir}/$id/$saveId.dos").takeIf { it.exists() && it.isFile }?.delete()
+            ?: File("${ConfigObj.saveDir}/$id/$saveId.save").takeIf { it.exists() && it.isFile }?.delete()
             ?: return null
         Logger.info("Deleted save file: $saveId")
         "Successfully deleted save file: $saveId"
