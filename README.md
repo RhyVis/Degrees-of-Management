@@ -4,6 +4,10 @@ English | [中文](README-ZH.md)
 
 Combine games, images, and mods through preset methods.
 
+## Deprecated, use [New Version](https://github.com/RhyVis/degrees-of-management-rs) instead.
+
+## 已弃用，使用[新版本](https://github.com/RhyVis/degrees-of-management-rs)。
+
 ## Quick Start
 Run the program, and the configuration file `config.toml` will be automatically created on the first run.
 
